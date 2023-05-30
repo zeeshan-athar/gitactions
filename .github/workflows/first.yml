@@ -1,5 +1,5 @@
 name: Test and Deploy workflow
-on: [ workflow_dispatch ]
+on: [ push, workflow_dispatch ]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -33,3 +33,13 @@ jobs:
         with:
           name: dist-artifact
           path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-artifact
+      - name: Show artifacts
+        run: ls 
