@@ -1,0 +1,10 @@
+name: Output
+on:
+  issues:
+    types: open
+jobs:
+  output:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output issue detail
+        runs: ${{ github.event.issue.number }}
