@@ -2,7 +2,7 @@ name: First workflow
 on: [ push, workflow_dispatch ]
 jobs:
   first-job:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Print First Step
         run: echo "First step."
