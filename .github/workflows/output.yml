@@ -7,4 +7,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Output issue detail
-        runs: ${{ github.event.issue.number }}
+        run: ${{ github.event.issue.number }}
