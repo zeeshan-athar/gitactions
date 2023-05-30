@@ -18,7 +18,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     outputs:
-      filename: ${{ steps.fileNameId.filename }}
+      filename: ${{ steps.fileNameId.outputs.filename }}
     steps:
       - name: Get code
         uses: actions/checkout@v3
