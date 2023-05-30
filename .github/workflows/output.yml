@@ -7,5 +7,6 @@ jobs:
   output:
     runs-on: ubuntu-latest
     steps:
-      - name: Output issue detail
-        run: ${{ github.event.issue.number }}
+      - env:
+          ISSUE_NO: ${{ github.event.issue.number }}
+        run: echo $ISSUE_NO
