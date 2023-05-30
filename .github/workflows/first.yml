@@ -17,6 +17,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      file-name: ${{ steps.fileNameId.filename }}
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -28,6 +30,9 @@ jobs:
         run: npm ci
       - name: Build project
         run: npm run build
+      - name: Save file name
+        id: fileNameId
+        run: find dist/assets/*.js -type f -execdir echo 'filename={}' >> $GITHUB_OUTPUT ';'
       - name: Create artifact
         uses: actions/upload-artifact@v3
         with:
@@ -42,4 +47,6 @@ jobs:
         with:
           name: dist-artifact
       - name: Show artifacts
-        run: ls 
+        run: ls
+      - name: Show filename
+        run: echo "${{ needs.build.outputs.file-name  }}" 
