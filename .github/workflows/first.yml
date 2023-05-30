@@ -18,7 +18,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     outputs:
-      file-name: ${{ steps.fileNameId.filename }}
+      filename: ${{ steps.fileNameId.filename }}
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -49,4 +49,4 @@ jobs:
       - name: Show artifacts
         run: ls
       - name: Show filename
-        run: echo "${{ needs.build.outputs.file-name  }}" 
+        run: echo "The file name is ${{ needs.build.outputs.filename }}. Lets do someting." 
