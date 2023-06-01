@@ -11,11 +11,13 @@ jobs:
         with:
           node-version: 18
       - name: Create cache
+        id: cache
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: node_modules
           key: deps-node-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Run Tests
         run: npm test
@@ -32,11 +34,13 @@ jobs:
         with:
           node-version: 18
       - name: Create cache
+        id: cache
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: node_modules
           key: deps-node-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Build project
         run: npm run build
@@ -59,4 +63,11 @@ jobs:
       - name: Show artifacts
         run: ls
       - name: Show filename
-        run: echo "The file name is ${{ needs.build.outputs.filename }}. Lets do someting." 
+        run: echo "The file name is ${{ needs.build.outputs.filename }}. Lets do someting."
+  report:
+    needs: test
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Report
+        run: echo "Something went wrong".
